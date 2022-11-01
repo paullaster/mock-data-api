@@ -102,7 +102,15 @@ const deleteUser = ( id) => {
             return setTimeout (
                 () => reject ( new Error ( 'user not found!')), 250
             );
-        }
+        };
+
+        users = {
+            ...rest
+        };
+
+        return setTimeout (
+            () => resolve (true), 250
+        )
 
     });
 };

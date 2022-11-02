@@ -95,9 +95,7 @@ const handleUserCreation = (event) => {
 // Handling user update!
 const handleUserUpdate = (id) => {
   const user = users.find ( (user) => user.id === id);
-  console.log (user)
   const isDeveloper = !user.isDeveloper;
-  console.log (id)
   updateUser (id, {isDeveloper})
   .then ( (response) => {
     reFetch ();
@@ -109,7 +107,16 @@ const handleUserUpdate = (id) => {
 };
 
 //Handlin delete user:
-const 
+const handleDeleteUser = (id) => {
+  deleteUser (id)
+  .then ( (response) => {
+    reFetch ();
+    console.log (response);
+  })
+  .catch ( (error) => {
+    console.log (error.message);
+  });
+};
 
   if (!users) {
     return null;
@@ -130,7 +137,8 @@ const
                     toggle developer
                   </Button>
                   <Button
-                  onClick={ handleDeleteUser}
+                  id={user.id}
+                  onClick={handleDeleteUser}
                   >
                     delete
                   </Button>

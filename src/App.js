@@ -3,6 +3,11 @@ import './App.css';
 import { getUsers, createUser, updateUser, deleteUser } from './fakedb/fakedb';
 
 
+// creating developer text
+const getDeveloperText = (isDeveloper) => {
+  return `is ${ isDeveloper ? 'a' : 'not a' } developer`
+};
+
 function App() {
 
   const [users, setUsers] = useState (null);
@@ -17,9 +22,21 @@ function App() {
     });
   }, []);
 
+  if (!users) {
+    return null;
+  };
   return (
     <div className="App">
-      <h1>Fake data </h1>
+      <ul>
+        {
+          users.map ( (user) => {
+            const developerText = getDeveloperText (user.isDeveloper);
+            return (
+              
+            );
+          })
+        }
+      </ul>
     </div>
   );
 }

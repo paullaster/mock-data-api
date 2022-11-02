@@ -1,21 +1,24 @@
 import { v4 as uuidv4} from 'uuid';
 
 //fake database
+let id1 = uuidv4 ();
+let id2 = uuidv4 ();
+let id3 = uuidv4 ();
 let users = {
-    [uuidv4 ()]: {
-        id: uuidv4 (),
+    [id3]: {
+        id: id3,
         firstName: 'John',
         lastName: 'Smith',
         isDeveloper: true,
     },
-    [uuidv4 ()]: {
-        id: uuidv4 (),
+    [id1]: {
+        id: id1,
         firstName: 'Paullaster',
         lastName: 'Okoth',
         isDeveloper: true,
     },
-    [ uuidv4 ()]: {
-        id: uuidv4 (),
+    [ id2]: {
+        id: id2,
         firstName: 'Arthur',
         lastName: 'Oduor',
         isDeveloper: false,
@@ -59,13 +62,14 @@ const createUser = ( data) => {
                 () => reject ( new Error ( 'Cannot create user, provide all information!') ), 250
             );
         };
+        let id = uuidv4 ();
         const newUser = {
-            id: uuidv4 (),
+            id: id,
             ...data
         }
         users = {
             ...users,
-            [uuidv4 ()]: newUser
+            [id]: newUser
         };
         return setTimeout (
 
@@ -88,7 +92,7 @@ const updateUser = ( id, data) => {
             ...data
         };
         return setTimeout (
-            () => resolve (true), 250
+            () => resolve (users), 250
         );
     });
 };

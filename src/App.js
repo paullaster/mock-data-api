@@ -35,9 +35,10 @@ const InputWithLabel = ( {onChange, type='text', placeHolder='Enter first name',
 
 
 //Button Component:
-const Button = ( {type='button', children}) => {
+const Button = ( {id, onClick,  type='button', children}) => {
   return (
     <button
+    onClick={ () => onClick (id)}
     type={type}
     >
       {children}
@@ -91,6 +92,25 @@ const handleUserCreation = (event) => {
   });
 };
 
+// Handling user update!
+const handleUserUpdate = (id) => {
+  const user = users.find ( (user) => user.id === id);
+  console.log (user)
+  const isDeveloper = !user.isDeveloper;
+  console.log (id)
+  updateUser (id, {isDeveloper})
+  .then ( (response) => {
+    reFetch ();
+    console.log (response);
+  })
+  .catch ( (error) => {
+    console.log (error.message);
+  });
+};
+
+//Handlin delete user:
+const 
+
   if (!users) {
     return null;
   };
@@ -103,6 +123,17 @@ const handleUserCreation = (event) => {
             return (
               <li key={user.id}>
                   {user.firstName} {user.lastName} {developerText}
+                  <Button
+                  id={user.id}
+                  onClick={ handleUserUpdate }
+                  >
+                    toggle developer
+                  </Button>
+                  <Button
+                  onClick={ handleDeleteUser}
+                  >
+                    delete
+                  </Button>
               </li>
             );
           })

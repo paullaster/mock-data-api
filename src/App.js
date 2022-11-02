@@ -32,7 +32,9 @@ function App() {
           users.map ( (user) => {
             const developerText = getDeveloperText (user.isDeveloper);
             return (
-              
+              <li key={user.id}>
+                  {user.firstname} {user.lastname} {developerText}
+              </li>
             );
           })
         }

@@ -114,3 +114,12 @@ const deleteUser = ( id) => {
 
     });
 };
+
+// Exporting fake APIs
+export {
+    getUser, 
+    getUsers, 
+    createUser,
+    updateUser,
+    deleteUser,
+};

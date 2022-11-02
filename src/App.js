@@ -102,7 +102,7 @@ const handleUserCreation = (event) => {
             const developerText = getDeveloperText (user.isDeveloper);
             return (
               <li key={user.id}>
-                  {user.firstname} {user.lastname} {developerText}
+                  {user.firstName} {user.lastName} {developerText}
               </li>
             );
           })

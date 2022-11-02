@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import './App.css';
 import { getUsers, createUser, updateUser, deleteUser } from './fakedb/fakedb';
 
@@ -8,11 +8,50 @@ const getDeveloperText = (isDeveloper) => {
   return `is ${ isDeveloper ? 'a' : 'not a' } developer`
 };
 
-function App() {
+//Form component:
+const Form = ( {onSubmit, children}) => {
+  return (
+    <form
+    onSubmit={onSubmit}
+    >
+      {children}
+    </form>
+  );
+};
+
+//Form Input with label component:
+const InputWithLabel = ( {onChange, type='text', placeHolder='Enter first name', children}) => {
+  return (
+    <label>
+      {children}
+      <input 
+      type={type} 
+      placeholder={placeHolder}
+      onChange={onChange} 
+      />
+    </label>
+  );
+};
+
+
+//Button Component:
+const Button = ( {type='button', children}) => {
+  return (
+    <button
+    type={type}
+    >
+      {children}
+    </button>
+  );
+};
+
+const App = () => {
 
   const [users, setUsers] = useState (null);
+  const [firstName, setFirstName] = useState ( '' );
+  const [lastName, setLastName] = useState ( '' );
 
-  useEffect ( () => {
+  const doGetUsers = useCallback ( () => {
     getUsers ()
     .then ( (result) => {
       setUsers (result);
@@ -20,7 +59,37 @@ function App() {
     .catch ( (error) => {
       console.log (error.message);
     });
-  }, []);
+  }, [])
+  useEffect ( () => {
+    doGetUsers ();
+  }, [doGetUsers]);
+
+  //Refetching users:
+  const reFetch = () => {
+    doGetUsers();
+  };
+//Handling Change in first name:
+const handleFirstNameChange = (event) => {
+  setFirstName (event.target.value);
+};
+
+//Handling Change in last name:
+const handleLastNamechange = (event) => {
+  setLastName (event.target.value);
+}
+
+//Handling user creation:
+const handleUserCreation = (event) => {
+  event.preventDefault();
+  createUser ( {firstName, lastName, isDeveloper: false} )
+  .then ( (response) => {
+    reFetch ();
+    console.log (response);
+  })
+  .catch ( (error) => {
+    console.log (error.message);
+  });
+};
 
   if (!users) {
     return null;
@@ -39,6 +108,33 @@ function App() {
           })
         }
       </ul>
+      <span>Create Users:</span>
+      <div>
+        <Form
+        onSubmit={handleUserCreation}
+        >
+          <div>
+            <InputWithLabel
+            onChange={handleFirstNameChange}
+            >
+              Firstname:
+            </InputWithLabel>
+          </div>
+          <div>
+            <InputWithLabel
+            onChange={handleLastNamechange}
+            placeHolder='Enter your last name'
+            >
+              Lastname:
+            </InputWithLabel> 
+          </div>
+          <Button
+          type='submit'
+          >
+            Create User
+          </Button>
+        </Form>
+      </div>
     </div>
   );
 }

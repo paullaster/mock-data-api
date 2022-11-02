@@ -4,20 +4,20 @@ import { v4 as uuidv4} from 'uuid';
 let users = {
     [uuidv4 ()]: {
         id: uuidv4 (),
-        firstname: 'John',
-        lastname: 'Smith',
+        firstName: 'John',
+        lastName: 'Smith',
         isDeveloper: true,
     },
     [uuidv4 ()]: {
         id: uuidv4 (),
-        firstname: 'Paullaster',
-        lastname: 'Okoth',
+        firstName: 'Paullaster',
+        lastName: 'Okoth',
         isDeveloper: true,
     },
     [ uuidv4 ()]: {
         id: uuidv4 (),
-        firstname: 'Arthur',
-        lastname: 'Oduor',
+        firstName: 'Arthur',
+        lastName: 'Oduor',
         isDeveloper: false,
     },
 }
@@ -54,7 +54,7 @@ const getUser = (id) => {
 // Creating a new user
 const createUser = ( data) => {
     return new Promise ( (resolve, reject) => {
-        if ( !data.firstname || !data.lastname ) {
+        if ( !data.firstName || !data.lastName ) {
             return setTimeout (
                 () => reject ( new Error ( 'Cannot create user, provide all information!') ), 250
             );
@@ -69,7 +69,7 @@ const createUser = ( data) => {
         };
         return setTimeout (
 
-            () => resolve (true), 250
+            () => resolve (users), 250
         );
     });
 };
